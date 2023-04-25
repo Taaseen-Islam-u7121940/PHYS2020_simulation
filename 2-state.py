@@ -1,7 +1,7 @@
 """
 Module 2-state
 Author: Taaseen Islam (u7121940)
-This module contains code for models of a 2-state system
+This module contains code for statistical models of a 2-state system
 
 Current code: rudimentary simulation of essentially flipping a coin"""
 
