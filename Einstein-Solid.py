@@ -12,9 +12,12 @@ Chapter 6.3, Page 136
 import pylab as pl
 from scipy.special import comb
 import pandas as pd
-NA = 100
-NB = 100
-q = 200
+import plotly.graph_objects as go
+import plotly.io as io
+
+NA = 3000
+NB = 1000
+q = 100
 N = NA + NB
 # Find multiplicity of all macrostates
 omegaA = pl.zeros(q+1)
@@ -22,7 +25,7 @@ qAvalue = pl.zeros(q+1)
 omegaB = pl.zeros(q+1)
 omegaAB = pl.zeros(q+1)
 # Loop through all macrostates and find multiplicity
-for istate in range(0,q):
+for istate in range(0,q+1):
     qA = istate
     qAvalue[istate] = qA
     omegaA[istate] = comb(qA+NA-1,qA)
@@ -43,3 +46,19 @@ s_matrix    = [SA, SB, SAB]
 #Rows are multiplicity of A, multiplicity of B, multiplicity of both
 mult_df = pd.DataFrame(mult_matrix, index=["A", "B", "AB"])
 s_df = pd.DataFrame(s_matrix, index=["A", "B", "AB"])
+
+#%% Graphs with Plotly
+io.renderers.default="browser"
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=qAvalue, y=SA,
+                         mode='markers', name="Entropy in A"))
+fig.add_trace(go.Scatter(x=qAvalue, y=SB,
+                         mode='markers', name="Entropy in B"))
+fig.add_trace(go.Scatter(x=qAvalue, y=SAB,
+                         mode='markers', name="Total entropy"))
+fig.update_yaxes(title_text="Entropy (S/k)")
+fig.update_xaxes(title_text="q_A")
+fig.update_layout(title_text=("Entropy for N_A={}, N_B={}, q={}".format(NA,NB,q)))
+
+fig.show()

@@ -14,7 +14,7 @@ import numpy as np
 from vpython import rate
 
 #Sets length of the grid's axes and thus the number of objects N
-length = 100
+length = 10
 num_objs = length**2
 #Creates grid of 1s and 0s
 Z = np.random.randint(2, size=(length, length))
@@ -28,15 +28,19 @@ plt.title("{} Objects".format(num_objs))
 plt.xlabel("Proportion: {}".format(round(prop, ndigits=3)))
 ax.pcolormesh(x, y, Z)
 
-''' Loop for viewing multiple graphs in succession.
+#%%Loop for viewing multiple graphs in succession.
 time = 0
-while time < 100:
+#Runs for upperbound/rate time
+while time < 10:
+    rate(1)
     Z = np.rint(np.random.rand(length, length))
- #   prop = np.count_nonzero(Z)/num_objs
+    prop = np.count_nonzero(Z)/num_objs
 
     fig, ax = plt.subplots()
     plt.title("{} Objects".format(num_objs))
-  #  plt.xlabel("Proportion: {}".format(round(prop, ndigits=2)))
+    plt.xlabel("Proportion: {}".format(round(prop, ndigits=2)))
     ax.pcolormesh(x, y, Z)
+    
+    plt.show()
     time += 1
-    '''
+ 
